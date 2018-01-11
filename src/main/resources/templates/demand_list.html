@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>需求列表</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body class="container">
+<div th:include="includeTop :: head"></div>
+<br/>
+<h1>需求列表</h1>
+<br/>
+
+<div class="with:80%">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>需求</th>
+            <th>名称</th>
+            <th>价格</th>
+            <th>发布者</th>
+            <th>时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr  th:each="demand : ${demands}">
+            <th scope="row" th:text="${demand.id}">1</th>
+            <td th:text="${demand.name}"></td>
+            <td th:text="${demand.price}"></td>
+            <td th:text="${demand.user.getUserName()}"></td>
+            <td th:text="${demand.dateTime}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:align="center">
+        <span th:text="'第'+${pages[0]+1}+'页，'+'共'+${pages[1]}+'页'"></span>&nbsp;&nbsp;&nbsp;
+        <a th:if="${pages[0]!=0}" th:href="@{/demands/{page}(page=${pages[0]}-1)}">上一页</a>&nbsp;&nbsp;
+        <a th:if="${pages[0]!=pages[1]-1}" th:href="@{/demands/{page}(page=${pages[0]}+1)}">下一页</a>
+
+        <div class="form-group">
+            <div class="col-sm-2 control-label">
+                <a th:href="@{/postDemand}" class="btn btn-info">发布需求</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

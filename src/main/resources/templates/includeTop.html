@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+
+<body class="container" >
+
+
+<div th:fragment="head">
+    <br/>
+    <span>欢迎 ,</span>&nbsp;&nbsp;
+    <span th:if="${session.USER_CONTEXT!= null}" >
+        <a th:href="@{/user/information}" th:text="${session.USER_CONTEXT.getUserName()}"></a> &nbsp; &nbsp; &nbsp;&nbsp;
+    </span>
+    <spam th:unless="${session.USER_CONTEXT!= null}">
+        <span>请</span>&nbsp;&nbsp;
+        <a th:href="@{/login}" th:text="登录"></a>&nbsp;&nbsp;或&nbsp;&nbsp;&nbsp;&nbsp;
+        <a th:href="@{/register}" th:text="注册"></a>&nbsp;&nbsp;&nbsp;&nbsp;
+    </spam>
+
+    <a th:href="@{/index}" >主页</a>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;
+    <a th:if="${session.USER_CONTEXT!=null}" th:href="@{/logout}" th:method="post">注销</a>&nbsp; &nbsp; &nbsp; &nbsp;
+    <a th:href="@{/commodities}">商品列表</a> &nbsp; &nbsp; &nbsp; &nbsp;
+    <a th:href="@{/demands}">需求列表</a> &nbsp; &nbsp; &nbsp; &nbsp;
+</div>
+
+</body>
+</html>

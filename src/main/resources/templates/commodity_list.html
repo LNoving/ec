@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>商品列表</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body class="container">
+<div th:include="includeTop :: head"></div>
+<br/>
+<h1>commodities list</h1>
+<br/>
+<div class="with:80%">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Commodity Name</th>
+            <th>Price</th>
+            <th>seller</th>
+            <th>time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr  th:each="commodity : ${paged}">
+            <th scope="row" th:text="${commodity.id}">1</th>
+            <td>
+                <a th:href="@{/commodity/{id}(id=${commodity.id})}" th:name="commodity" th:text="${commodity.name}" ></a>
+            </td>
+            <td th:text="${commodity.price}"></td>
+            <td th:text="${commodity.seller.userName}"></td>
+            <td th:text="${commodity.date}"></td>
+            <td>
+                <a th:if="${commodity.order==null}" th:href="@{/commodity/{id}(id=${commodity.id})}"
+                   class="btn btn-primary">Buy it now</a>
+                <span th:if="${commodity.order!=null}" th:text="'已被'+${commodity.order.getBuyer().getUserName()}+'购买'"></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:align="center">
+        <span th:text="'第'+${pages[0]+1}+'页，'+'共'+${pages[1]}+'页'"></span>&nbsp;&nbsp;&nbsp;
+        <a th:if="${pages[0]!=0}" th:href="@{/commodities/{page}(page=${pages[0]}-1)}">上一页</a>&nbsp;&nbsp;
+        <a th:if="${pages[0]!=pages[1]-1}" th:href="@{/commodities/{page}(page=${pages[0]}+1)}">下一页</a>
+        <div class="form-group">
+            <div class="col-sm-2 control-label">
+                <a th:href="@{/sell}" class="btn btn-info">出售</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+</body>
+</html>

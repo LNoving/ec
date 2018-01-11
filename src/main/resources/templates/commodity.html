@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Commodity</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body class="container">
+<div th:include="includeTop :: head"></div>
+<br/>
+<h1>commodity</h1>
+<br/>
+<div class="with:60%">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>#id</th>
+            <th>Commodity Name</th>
+            <th>Price</th>
+            <th>seller</th>
+            <th>time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row" th:text="${commodity.id}"></th>
+            <td th:text="${commodity.name}" ></td>
+            <td th:text="${commodity.price}"></td>
+            <td th:text="${commodity.seller.userName}"></td>
+            <td th:text="${commodity.date}"></td>
+            <td>
+                <a th:href="@{/purchase/{id}(id=${commodity.id})}" class="btn btn-info">Buy it now</a>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+    <form class="form-horizontal" th:align="center" th:action="@{/purchase/{id}(id=${commodity.id})}"  th:method="post">
+
+        <div class="form-group">
+            <label for="address" class="col-sm-2 control-label">地址</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="address"  id="address" placeholder="地址" required="required"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="tel" class="col-sm-2 control-label" >电话</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="tel" id="tel" placeholder="电话" required="required" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" value="购买" class="btn btn-info" />
+                &nbsp; &nbsp; &nbsp;
+                <input type="reset" value="重置" class="btn btn-info" />
+                &nbsp; &nbsp; &nbsp;
+                <a th:href="commodities">返回商品列表</a>
+            </div>
+        </div>
+    </form>
+
+    <p th:if ="${errorMsg}!=null" >
+    <div style="color:red" th:text="${errorMsg}"></div>
+    </p>
+
+</div>
+
+</body>
+</html>

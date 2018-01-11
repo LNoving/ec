@@ -1,0 +1,40 @@
+spring:
+    datasource:
+        name: ec
+        url: jdbc:mysql://localhost:3306/ec
+        username: root
+        password: zhanghao10126
+    jpa:
+        database: mysql
+        show-sql: true
+    #Hibernate ddl auto(validate|create|create-drop|update)
+        hibernate:
+        #自动更新表结构
+            ddl-auto: update
+            #naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+
+    thymeleaf:
+        mode: HTML5
+        encoding: utf-8
+        content-type: text/html
+        cache: false
+
+    session:
+        store-type: jdbc
+
+
+
+    devtools:
+        restart:
+            additional-paths: src/main/java
+            additional-exclude: static/**,public/**
+
+server:
+    port: 8686
+    contextpath: /
+
+    tomcat:
+        uri-encoding: UTF-8
+
+    session:
+      timeout:

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>index</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+
+<body class="container">
+
+
+
+
+<div class="with:80%" align="center">
+
+    <h1 >主页</h1>
+    <br/>
+    <br/>
+    <a href="/commodities" class="btn btn-info">&nbsp;&nbsp;&nbsp;&nbsp;商品列表&nbsp;&nbsp;&nbsp;&nbsp;</a>
+    <br/>
+    <br/>
+    <br/>
+    <a href="/demands" class="btn btn-info">&nbsp;&nbsp;&nbsp;&nbsp;需求列表&nbsp;&nbsp;&nbsp;&nbsp;</a>
+    <br/>
+    <br/>
+    <br/>
+    <div th:if="${null==session.USER_CONTEXT}" >
+        <a href="/login" class="btn btn-info" th:text="  登录  "></a>&nbsp;&nbsp;&nbsp;
+        <a href="/register" class="btn btn-default" th:text="  注册  "></a>
+    </div>
+
+    <div th:if="${null!=session.USER_CONTEXT}" >
+        <a href="/logout" class="btn btn-info" th:text="  注销  "></a>&nbsp;&nbsp;&nbsp;
+    </div>
+
+
+</div>
+
+</body>
+</html>

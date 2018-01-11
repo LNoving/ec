@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>User Information</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    </link>
+</head>
+<body class="container">
+<div th:include="includeTop :: head"></div>
+<br/>
+<h1> 订单 </h1>
+<br/><br/>
+<div class="with:80%">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th> 卖家id </th>
+
+            <th> 商品名称 </th>
+            <th> 下单时间 </th>
+            <th> 订单状态 </th>
+
+            <th> 确认 </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr  th:each="order : ${orders}">
+            <th scope="row" th:text="${order.id}"></th>
+            <td th:text="${order.seller.userName}"></td>
+            <td th:text="${order.commodity.name}"></td>
+            <td th:text="${order.date}"></td>
+            <td th:switch="${order.status}">
+                <span th:case="0" th:text="无效"></span>
+                <span th:case="1" th:text="待发货"></span>
+                <span th:case="2" th:text="待收货"></span>
+                <span th:case="3" th:text="完成"></span>
+            </td>
+            <td th:if="${order.status == 2}" >
+                <a th:href="@{/confirm/{id}(id=${order.id})}" th:method="POST" class="btn btn-primary"> 确认收货 </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<h1> 出售 </h1>
+<div class="with:80%">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>商品id</th>
+            <th>  商品名称 </th>
+            <th> 价格 </th>
+            <th> 状态 </th>
+            <th> 买家id </th>
+            <th> 发货 </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr  th:each="commodity : ${commodities}">
+            <td th:text="${commodity.id}"></td>
+            <td th:text="${commodity.name}"></td>
+            <td th:text="${commodity.price}"></td>
+            <td th:if="${commodity.order == null}" th:text="未购买"></td>
+            <td th:if="${commodity.order != null}">
+            <span th:switch="${commodity.order.status}">
+                <span th:case="0" th:text="无效"></span>
+                <span th:case="1" th:text="待发货"></span>
+                <span th:case="2" th:text="待收货"></span>
+                <span th:case="3" th:text="完成"></span>
+            </span>
+            </td>
+            <td th:if="${commodity.order != null}" th:text="${commodity.order.buyer.userName}"></td>
+            <td th:if="${commodity.order != null}">
+                <a th:if="${commodity.order.status == 1}" th:href="@{/deliver/{id}(id=${commodity.id})}"
+                    th:method="POST" class="btn btn-primary"> 发货 </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <div class="col-sm-2 control-label">
+        <a href="/sell" th:href="@{/sell}" class="btn btn-info">出售</a>
+    </div>
+</div>
+<br/>
+<h1> 需求 </h1>
+<div class="with:80%">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>名称</th>
+            <th>价格</th>
+            <th>状态</th>
+            <th>删除</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr  th:each="demand : ${demands}">
+
+            <td th:text="${demand.id}"></td>
+            <td th:text="${demand.name}"></td>
+            <td th:text="${demand.price}"></td>
+            <td th:text="${demand.status}"></td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <div class="col-sm-2 control-label">
+        <a href="/sell" th:href="@{/postDemand}" class="btn btn-info">发布需求</a>
+    </div>
+</div>
+
+</body>
+</html>
